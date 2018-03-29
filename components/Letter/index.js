@@ -62,23 +62,23 @@ export default class Letter extends Component {
 }
 
 const styles = StyleSheet.create({
- letter: {
-  shadowOffset:{  width: 5,  height: 5,  },
-shadowColor: 'black',
-shadowOpacity: 0.6,
+  letter: {
+    fontFamily:'KannadaSangamMN',
+    shadowOffset:{  width: 5,  height: 5,  },
+    shadowColor: 'black',
+    shadowOpacity: 0.6,
     borderWidth:2,
     borderStyle: 'solid',
-    borderColor:'#f2f2f2',
+    borderColor:'#959595',
     backgroundColor:'#fefefe',
     color:'black',
     width:30,
-    lineHeight:30,
+    lineHeight:20,
     height:30,
     fontSize: 20,
     textAlign: 'center',
     margin: 3,
     padding:4,
-    paddingTop:0,
   },
 });
 

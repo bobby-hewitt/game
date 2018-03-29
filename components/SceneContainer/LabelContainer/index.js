@@ -2,7 +2,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import React, { Component } from 'react';
 import { nextImage, prevImage, nextLabel, prevLabel, setLabelIndex, setImageIndex } from '../../../actions/image'
-import { increaseScore, isIncorrect } from '../../../actions/score'
+import { increaseScore, isIncorrect, addPoints, removePoints, setStreak, loseLife, resetLives } from '../../../actions/score'
 import { updateImages } from '../../../actions/http'
 import { setLetters, setWord, setLastLetter } from '../../../actions/letters'
 import { setShowLetters } from '../../../actions/ui'
@@ -53,30 +53,42 @@ class LabelContainer extends Component {
 
   onKeyPress(text){
     if (this.props.showLetters){
-    var key = text[text.length-1]
-    this.props.setLastLetter(key.toLowerCase())
+      var key = text[text.length-1]
+      this.props.setLastLetter(key.toLowerCase())
 
-    var letters = Object.assign([], this.props.letters)
-    var hasFound = false
-    var count = 0
-    for (var i = 0; i < this.props.letters.length; i++){
-      if (key.toLowerCase() === this.props.letters[i].letter){
-        hasFound = true
-        this.props.letters[i].found = true
+      var letters = Object.assign([], this.props.letters)
+      var hasFound = false
+      var count = 0
+      for (var i = 0; i < this.props.letters.length; i++){
+        if (key.toLowerCase() === this.props.letters[i].letter){
+          hasFound = true
+          if (!this.props.letters[i].found){
+            var streak = this.props.streak ? this.props.streak + 10 : 10
+            this.props.increaseScore(streak)
+            this.props.addPoints(streak.toString())
+            this.props.setStreak(this.props.streak ? this.props.streak + 10 : 10)
+          }
+          this.props.letters[i].found = true
+        }
+        if (this.props.letters[i].found || this.props.letters[i].letter === ' '){
+          count += 1
+        }
       }
-      if (this.props.letters[i].found || this.props.letters[i].letter === ' '){
-        count += 1
+      this.props.setLetters(letters)
+      
+      if (!hasFound){
+        if (this.props.lives === 1){
+          
+          //game over
+        }
+        this.props.loseLife()
+        this.props.setStreak(false)
+        this.props.isIncorrect()
+      } else if (count === this.props.letters.length ){
+        setTimeout(() => {
+          this.nextLabel()
+        },500)
       }
-    }
-    this.props.setLetters(letters)
-    
-    if (!hasFound){
-      this.props.isIncorrect()
-    } else if (count === this.props.letters.length ){
-      setTimeout(() => {
-        this.nextLabel()
-      },500)
-    }
     } 
   }
 
@@ -112,8 +124,6 @@ class LabelContainer extends Component {
   }
 
   renderRows(letters){
-
-    // var letters = ['h','i', ' ', 't', 'h', 'e', 'r', 'e']
     let rows = [[]]
     for (var i = 0; i < letters.length; i++){
       if (letters[i].letter === ' '){
@@ -183,7 +193,7 @@ class LabelContainer extends Component {
               <AnimateInOutView 
                 isVisible={this.props.showLetters}
                 incorrectToggle={this.props.incorrectToggle}>
-              {this.renderRows(this.props.letters)}
+                {this.renderRows(this.props.letters)}
               </AnimateInOutView>
             
         </View>
@@ -193,6 +203,8 @@ class LabelContainer extends Component {
 }
 
 const mapStateToProps = state => ({
+  lives: state.score.lives,
+  streak: state.score.streak,
   score: state.score.score,
   incorrectToggle: state.score.incorrectToggle,
   letters: state.letters.letters,
@@ -221,7 +233,12 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   increaseScore,
   setLetters,
   setWord,
-  isIncorrect
+  isIncorrect,
+  addPoints,
+  removePoints,
+  setStreak,
+  loseLife,
+  resetLives
 }, dispatch)
 
 export default connect(

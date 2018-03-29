@@ -2,9 +2,11 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import React, { Component } from 'react';
 import { nextImage, prevImage, nextLabel, prevLabel } from '../../actions/image'
-import { increaseScore } from '../../actions/score'
+import { increaseScore, addPoints, removePoints, resetPoints } from '../../actions/score'
 import { updateImages } from '../../actions/http'
 import BackButton from '../BackButton'
+import Score from '../ScoreContainer'
+import Points from '../Points'
 import {
   Platform,
   StyleSheet,
@@ -24,6 +26,10 @@ class SceneContainer extends Component {
     }
   }
 
+  componentWillMount(){
+    this.props.resetPoints()
+  }
+
 
 
   render() {
@@ -31,7 +37,13 @@ class SceneContainer extends Component {
       <View style={styles.container}>
 
         <Image source={{uri: this.props.image.image}} style={styles.image}/>
-        <BackButton navigator={this.props.navigator}/>
+        <BackButton navigator={this.props.navigator}/> 
+        {this.props.points.map((p, i) => {
+          return(
+            <Points key={i} index={i} value={p} lives={this.props.lives}/>
+          )
+        })}
+        <Score score={this.props.score} lives={this.props.lives}/>
         <LabelContainer />  
       </View>
     );
@@ -39,7 +51,9 @@ class SceneContainer extends Component {
 }
 
 const mapStateToProps = state => ({
-  score: state.score,
+  lives: state.score.lives,
+  score: state.score.score,
+  points: state.score.points,
   image: state.data[state.image.imageIndex],
   imageIndex: state.image.imageIndex,
   labelIndex: state.image.imageIndex,
@@ -53,6 +67,9 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   prevLabel,
   updateImages,
   increaseScore,
+  addPoints,
+  resetPoints,
+  removePoints,
 }, dispatch)
 
 export default connect(

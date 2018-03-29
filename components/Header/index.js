@@ -36,8 +36,8 @@ export default class Header extends Component {
     return (
         <View>
             <View style={styles.container}>
-              <Text style={[styles.title, styles.text]}>What would Google do?</Text>
-              <Text style={styles.text}>Average score: <Text style={[styles.text, styles.bold]}></Text>{'100'}</Text>      
+              <Text style={[styles.title]}>What would Google do?</Text>
+              <Text style={styles.text}>Average score: <Text style={[styles.text]}></Text>{'100'}</Text>      
             </View>
         </View>
     );
@@ -47,21 +47,25 @@ export default class Header extends Component {
 const styles = StyleSheet.create({
   text:{
   color:'black',
+  fontFamily:'KannadaSangamMN',
+  color:'rgb(65,64,66)'
   },
   bold:{
     fontWeight:'900'
   },
   title:{
-    
+    fontFamily:'BacktoBlackDemo',
     fontWeight:'bold',
     fontSize:30,
+    lineHeight:40,
   },
   container:{
     alignItems:'center',
     justifyContent: 'center',
     flexDirection:'column',
     paddingTop:30,
-    backgroundColor:'rgba(0,0,0,0.1)',
+    paddingBottom:20,
+    backgroundColor:'rgba(252,232,78,1)',
     flex:1
   },
   image: {

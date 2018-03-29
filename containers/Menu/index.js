@@ -57,8 +57,9 @@ class Menu extends Component<Props> {
       const keys = Object.keys(results)
       for (var i = 0; i < keys.length; i++){
         images.push(results[keys[i]])
-        self.props.updateImages(images)
+        
       }
+      self.props.updateImages(images)
     })
   }
 
@@ -107,9 +108,9 @@ class Menu extends Component<Props> {
 
     return(
       <ScrollView>
-      <Header 
+      {/*<Header 
       image={images[images.length-1]}
-      score={this.props.score}/>
+      score={this.props.score}/>*/}
       <MashUp 
         onMashUp={this.onMashUp.bind(this)}
         navigator={this.props.navigator}
@@ -129,9 +130,9 @@ class Menu extends Component<Props> {
               {row.map((card, j) => {
                 if (card.image){
                 return(
-                  <ImageThumb key={i + ' ' + j}image={card.image.thumb} index={card.index} goToImage={this.goToImage.bind(this)}/>
+                  <ImageThumb key={i + ' ' + j} image={card.image.thumb} index={card.index} goToImage={this.goToImage.bind(this)}/>
                 )
-                } else return <View />
+                } else return <View key={i} />
               })
 
               }

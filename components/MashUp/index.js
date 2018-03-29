@@ -98,6 +98,7 @@ export default class MashUp extends Component {
               }
            
             </View>
+
             <View style={styles.textContainer}>
               <View style={styles.circle}>
               <Text style={styles.buttonText}>Mash</Text>
@@ -134,7 +135,7 @@ const styles = StyleSheet.create({
     left:0,
     right:0,
     bottom:0,
-    backgroundColor:'rgba(0,0,0,0.3)'
+    
   },
   textContainer:{
     position:'absolute',
@@ -142,16 +143,23 @@ const styles = StyleSheet.create({
     left:30,
     right:30,
     bottom:30,
+    borderStyle:'solid',
+    borderWidth:10,
+    borderColor:'rgba(220,53,89,1)',
      alignItems:'center',
     justifyContent:'center',
-     backgroundColor:'rgba(0,0,0,0.4)'
+     backgroundColor:'rgba(255,255,255,0)'
   },
   circle:{
+    borderStyle:'solid',
+    borderWidth:10,
+    borderColor:'#fefefe',
+    borderRadius:0,
     height:200,
     width:200,
      alignItems:'center',
     justifyContent:'center',
-     backgroundColor:'rgba(0,0,0,1)'
+     backgroundColor:'rgba(220,53,89,1)'
   },
   button:{
     alignItems:'center',
@@ -160,7 +168,10 @@ const styles = StyleSheet.create({
     height:Dimensions.get('window').width /3-20,
   },
   buttonText:{
+    margin:-5,
+    fontFamily:'BacktoBlackDemo',
     fontSize:50,
+    lineHeight:66,
     fontWeight:"900",
     color:'#fefefe'
   },
@@ -180,7 +191,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width:Dimensions.get('window').width,
     height:Dimensions.get('window').width,
-    backgroundColor:'rgba(0,0,0,0.1)',
+    backgroundColor:'rgba(255,255,255,0.6)',
     
     flex:1
   },

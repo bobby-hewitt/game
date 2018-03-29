@@ -45,16 +45,19 @@ export default class Header extends Component {
 
 const styles = StyleSheet.create({
   button:{
-    height:50,
-    width:50,
+    height:40,
+    width:40,
+    alignItems:'center',
+    justifyContent:'center',
+    backgroundColor:'rgb(66,65,67)',
     position:'absolute',
     top:30,
     left:15,
   },
 
   image: {
-    height:30,
-    width:30,
+    height:40,
+    width:40,
     
 
   }
