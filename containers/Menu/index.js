@@ -22,6 +22,18 @@ import {
   ScrollView
 } from 'react-native';
 
+import firebase from 'firebase'
+const firebaseConfig = {
+  apiKey: "AIzaSyArHo7wbhufIL6IKSgIDZthWQUJRw0N398",
+  authDomain: "photos-8aa9d.firebaseapp.com",
+  databaseURL: "https://photos-8aa9d.firebaseio.com",
+  projectId: "photos-8aa9d",
+  storageBucket: "",
+  messagingSenderId: "940508200624"
+};
+const Firebase = firebase.initializeApp(firebaseConfig)
+const DB = Firebase.database()
+
 type Props = {};
 class Menu extends Component<Props> {
    constructor(props){
@@ -31,13 +43,31 @@ class Menu extends Component<Props> {
     }
   }
 
+  componentWillMount(){
+    if (!this.props.images || this.props.images.length < 1){
+      this.getSavedData()
+    }
+  }
+
+    getSavedData(){
+    let self = this;
+    DB.ref('/images').once('value', function(snapshot){
+      var images = []
+      var results = snapshot.val()
+      const keys = Object.keys(results)
+      for (var i = 0; i < keys.length; i++){
+        images.push(results[keys[i]])
+        self.props.updateImages(images)
+      }
+    })
+  }
+
   onMashUp(){
     this.props.setGameType('mashUp')
      this.props.navigator.push({
       component: Home,
       navigationBarHidden: true,
     })
-
   }
 
   goToImage(index){
@@ -54,6 +84,7 @@ class Menu extends Component<Props> {
   }
 
   renderImageRows(images){
+    console.log(images)
     var imgArr = []
 
     for (var i =0; i < images.length; i = i+3){
@@ -116,7 +147,11 @@ class Menu extends Component<Props> {
   render() {
     return (
        <View style={styles.container}>
-       {this.renderImageRows(this.props.images)}
+       {this.props.images && this.props.images.length > 1 &&
+          <View>
+          {this.renderImageRows(this.props.images)}
+          </View>
+        }
        </View>
     );
   }

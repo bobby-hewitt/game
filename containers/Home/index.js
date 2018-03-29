@@ -19,17 +19,6 @@ import {
 import SceneContainer from '../../components/SceneContainer'
 
 
-import firebase from 'firebase'
-const firebaseConfig = {
-  apiKey: "AIzaSyArHo7wbhufIL6IKSgIDZthWQUJRw0N398",
-  authDomain: "photos-8aa9d.firebaseapp.com",
-  databaseURL: "https://photos-8aa9d.firebaseio.com",
-  projectId: "photos-8aa9d",
-  storageBucket: "",
-  messagingSenderId: "940508200624"
-};
-const Firebase = firebase.initializeApp(firebaseConfig)
-const DB = Firebase.database()
 
 type Props = {};
 class Home extends Component<Props> {
