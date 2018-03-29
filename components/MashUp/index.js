@@ -15,7 +15,7 @@ import {
   Dimensions,
   View
 } from 'react-native';
-import Home from '../../containers/Home'
+
 // import LabelContainer from './LabelContainer'
 
 export default class MashUp extends Component {
@@ -29,10 +29,7 @@ export default class MashUp extends Component {
 
 
   onpress(){
-    this.props.navigator.push({
-      component: Home,
-      navigationBarHidden: true,
-    })
+    this.props.onMashUp()
   }
 
 
@@ -183,7 +180,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width:Dimensions.get('window').width,
     height:Dimensions.get('window').width,
-    backgroundColor:'rgba(0,0,0,0.3)',
+    backgroundColor:'rgba(0,0,0,0.1)',
     
     flex:1
   },

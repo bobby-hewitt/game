@@ -1,6 +1,7 @@
 
 const initialState = {
 	score: 0,
+	gameType: null,
 	incorrectToggle: true,
 }
 
@@ -15,6 +16,11 @@ export default (state = initialState, action) => {
       return {
       	...state,
       	incorrectToggle:!state.incorrectToggle
+      }
+     case 'SET_GAME_TYPE':
+      return {
+      	...state,
+      	gameType:action.payload
       }
     default:
       return state

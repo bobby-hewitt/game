@@ -84,11 +84,20 @@ class LabelContainer extends Component {
     console.log('next')
 
     console.log(this.props.labelIndex)
-    if (this.props.labelIndex === this.props.image.labels.length -1 || this.props.labelIndex === 2){
+    if (this.props.gameType === 'mashUp'){
+        if (this.props.imageIndex < this.props.images.length -1){
          this.props.nextImage()
+        } else {
+          this.props.setImageIndex(0)
+          this.props.setLabelIndex(this.props.labelIndex + 1)
+          return
+        }
       return
+    } else if (this.props.labelIndex === this.props.image.labels.length -1){
+      
     } else {
-        this.transition()
+      this.transition()
+        // handle image complete
     }
   }
 
@@ -195,6 +204,7 @@ const mapStateToProps = state => ({
   labelIndex: state.image.labelIndex,
   images: state.data,
   showLetters: state.ui.showLetters,
+  gameType: state.score.gameType
 
 })
 

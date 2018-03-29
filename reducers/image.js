@@ -35,7 +35,7 @@ export default (state = initialState, action) => {
      case 'SET_IMAGE_INDEX':
       return {
         ...state,
-        imageIndex: 0,
+        imageIndex: action.payload,
       }
     default:
       return state

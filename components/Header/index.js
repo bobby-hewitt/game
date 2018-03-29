@@ -35,10 +35,9 @@ export default class Header extends Component {
   render() {
     return (
         <View>
-            <Image style={styles.image} source={{url: this.props.image.thumb}} />
             <View style={styles.container}>
-              <Text style={[styles.title, styles.text]}>TITLE</Text>
-              <Text style={styles.text}>Average score: <Text style={[styles.text, styles.bold]}></Text>{'100' + this.props.score}</Text>      
+              <Text style={[styles.title, styles.text]}>What would Google do?</Text>
+              <Text style={styles.text}>Average score: <Text style={[styles.text, styles.bold]}></Text>{'100'}</Text>      
             </View>
         </View>
     );
@@ -47,7 +46,7 @@ export default class Header extends Component {
 
 const styles = StyleSheet.create({
   text:{
-  color:'#fefefe',
+  color:'black',
   },
   bold:{
     fontWeight:'900'
@@ -61,13 +60,8 @@ const styles = StyleSheet.create({
     alignItems:'center',
     justifyContent: 'center',
     flexDirection:'column',
-    position:'absolute',
-    top:0,
-    left:0,
-    right:0,
-    bottom:0,
-    backgroundColor:'rgba(0,0,0,0.3)',
-    
+    paddingTop:30,
+    backgroundColor:'rgba(0,0,0,0.1)',
     flex:1
   },
   image: {

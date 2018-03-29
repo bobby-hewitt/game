@@ -6,12 +6,13 @@
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import React, { Component } from 'react';
-import { nextImage, prevImage, nextLabel, prevLabel } from '../../actions/image'
-import { increaseScore } from '../../actions/score'
+import { nextImage, prevImage, nextLabel, prevLabel, setImageIndex, setLabelIndex } from '../../actions/image'
+import { increaseScore, setGameType } from '../../actions/score'
 import { updateImages } from '../../actions/http'
 import ImageThumb from '../../components/ImageThumb'
 import MashUp from '../../components/MashUp'
 import Header from '../../components/Header'
+import Home from '../Home'
 import {
   Platform,
   StyleSheet,
@@ -30,11 +31,46 @@ class Menu extends Component<Props> {
     }
   }
 
+  onMashUp(){
+    this.props.setGameType('mashUp')
+     this.props.navigator.push({
+      component: Home,
+      navigationBarHidden: true,
+    })
+
+  }
+
+  goToImage(index){
+    console.log(index)
+    this.props.setLabelIndex(0)
+    this.props.setImageIndex(index)
+    setTimeout(() => {
+    this.props.navigator.push({
+      component: Home,
+      navigationBarHidden: true,
+    })
+    },100)
+    
+  }
+
   renderImageRows(images){
     var imgArr = []
 
     for (var i =0; i < images.length; i = i+3){
-      imgArr.push([images[i], images[i+1],images[i+2]])
+      imgArr.push([
+        {
+          image: images[i], 
+          index: i
+        },
+        {
+          image: images[i+1],
+          index: i+1
+        },
+        {
+          image: images[i+2],
+          index: i+2
+        }])  
+      
     }
 
 
@@ -44,6 +80,7 @@ class Menu extends Component<Props> {
       image={images[images.length-1]}
       score={this.props.score}/>
       <MashUp 
+        onMashUp={this.onMashUp.bind(this)}
         navigator={this.props.navigator}
         image1={images[images.length-2].thumb}
         image2={images[images.length-3].thumb}
@@ -59,9 +96,9 @@ class Menu extends Component<Props> {
           return(
             <View key={i} style={styles.row}>
               {row.map((card, j) => {
-                if (card){
+                if (card.image){
                 return(
-                  <ImageThumb key={i + ' ' + j}image={card.thumb} />
+                  <ImageThumb key={i + ' ' + j}image={card.image.thumb} index={card.index} goToImage={this.goToImage.bind(this)}/>
                 )
                 } else return <View />
               })
@@ -92,11 +129,14 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
 	nextImage, 
-	prevImage, 
+	prevImage,
+  setImageIndex, 
+  setLabelIndex, 
 	nextLabel, 
 	prevLabel,
 	updateImages,
 	increaseScore,
+  setGameType
 }, dispatch)
 
 export default connect(

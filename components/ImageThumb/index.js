@@ -27,12 +27,14 @@ export default class ImageThumb extends Component {
   }
 
 
-
+  onpress(){
+    this.props.goToImage(this.props.index)
+  }
 
 
   render() {
     return (
-        <TouchableOpacity onPress={this.onPress}>
+        <TouchableOpacity onPress={this.onpress.bind(this)}>
           <Image style={styles.image} source={{url: this.props.image}} />
         </TouchableOpacity>
     );
