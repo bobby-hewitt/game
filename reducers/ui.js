@@ -1,6 +1,7 @@
 
 const initialState = {
-  showLetters: true
+  showLetters: true,
+  showImage: true
 }
 
 export default (state = initialState, action) => {
@@ -9,6 +10,11 @@ export default (state = initialState, action) => {
       return {
       	...state,
       	showLetters: action.payload
+      }
+    case 'SHOW_IMAGE':
+      return {
+        ...state,
+        showImage: action.payload
       }
     default:
       return state

@@ -7,4 +7,13 @@ export const setShowLetters = (payload) => {
   }
 }
 
+export const setShowImage = (payload) => {
+  return dispatch => {
+    dispatch({
+      type: 'SHOW_IMAGE',
+      payload
+    })
+  }
+}
+
 

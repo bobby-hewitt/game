@@ -16,7 +16,7 @@ import {
   View
 } from 'react-native';
 // import LabelContainer from './LabelContainer'
-
+import Menu from '../../containers/Menu'
 export default class Header extends Component {
 
   constructor(props){
@@ -28,16 +28,17 @@ export default class Header extends Component {
 
 
   onpress(){
-    this.props.navigator.pop()
+    this.props.navigator.push({
+      component: Menu,
+      navigationBarHidden: true,
+    })
   }
 
 
   render() {
     return (
         <TouchableOpacity style={styles.button} onPress={this.onpress.bind(this)}>
-          
             <Image source={require('../../back.png')} style={styles.image}/>
-
         </TouchableOpacity>
     );
   }

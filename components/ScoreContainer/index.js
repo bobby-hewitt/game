@@ -34,8 +34,9 @@ export default class Score extends Component {
 
   componentDidMount(){
     setInterval(() => {
-      console.log(this.props.score)
+      console.log(this.props.highScore)
     },1000)
+    console.log(this.props.highScore)
   }
 
 
@@ -52,6 +53,10 @@ export default class Score extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <View style={styles.highScoreContainer}>
+          <Image resizeMode="contain" source={require('../../assets/images/trophy.png')} style={styles.heart} />
+          <Text style={styles.livesText}>{this.props.highScore}</Text>
+        </View>
       <View style={styles.livesContainer}>
         <Animated.View style={{transform: [{scale: this.state.scaleAnim}] }}>
           
@@ -62,10 +67,10 @@ export default class Score extends Component {
             <Text style={styles.livesText}>{this.props.lives}</Text>
           </View>
         </Animated.View>
-        
         </View>
+
         <View style={styles.scoreContainer}>
-        <Image resizeMode="contain" source={require('../../assets/images/coin.png')} style={styles.heart} />
+          <Image resizeMode="contain" source={require('../../assets/images/coin.png')} style={styles.heart} />
           <Text style={styles.livesText}>{this.props.score}</Text>
         </View>
       </View>
@@ -96,10 +101,22 @@ const styles = StyleSheet.create({
     alignItems:'center',
     justifyContent:'center'
   },
-  row:{
+  highScoreContainer:{
+    height:40,
+    flexDirection:'row',
+    backgroundColor:'rgb(66,65,67)',
+    paddingHorizontal:10,
     alignItems:'center',
     justifyContent:'center',
-    flexDirection:'row'
+        backgroundColor:'rgba(220,53,89,1)'
+  },
+  row:{
+    width:120,
+    flex:1,
+    position:'relative',
+    alignItems:'center',
+    justifyContent:'center',
+    flexDirection:'row',
   },
   heart:{
     position:'absolute',
@@ -111,24 +128,21 @@ const styles = StyleSheet.create({
     
   },
   livesText:{
+    width:120,
+    marginLeft:80,
+    
     fontFamily:'KannadaSangamMN',
     color:'white',
     shadowOffset:{  width: 1,  height: 1,  },
     shadowColor: 'black',
     shadowOpacity: 0.6,
-     fontWeight: "900",
-     fontSize:20,
-     lineHeight:40,
+    fontWeight: "900",
+    fontSize:20,
+    lineHeight:40,
+    textAlign:'left'
         
   },
-  text: {
-    fontFamily:'KannadaSangamMN',
-    shadowOffset:{  width: 1,  height: 1,  },
-    shadowColor: 'black',
-    shadowOpacity: 0.6,
-    color:'white',
-    fontWeight:"900",
-    fontSize: 30,  },
+
 });
 
 

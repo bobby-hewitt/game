@@ -6,6 +6,7 @@ const initialState = {
   points:[],
   streak: false,
   lives: 20,
+  highScore: 0,
 }
 
 export default (state = initialState, action) => {
@@ -19,6 +20,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         lives:state.lives -1
+      }
+    case 'ADD_LIFE':
+      return {
+        ...state,
+        lives:state.lives +1
       }
     case 'RESET_LIVES':
       return {
@@ -47,6 +53,7 @@ export default (state = initialState, action) => {
         ...state,
         points: [],
         lives:20,
+        score:0,
         streak: false,
 
       }
@@ -54,6 +61,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         points: state.points.splice(0,1)
+      }
+    case 'SET_HIGH_SCORE':
+      return {
+        ...state,
+        highScore: action.payload
       }
      case 'SET_STREAK':
       return {

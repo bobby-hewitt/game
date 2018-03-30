@@ -2,11 +2,12 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import React, { Component } from 'react';
 import { nextImage, prevImage, nextLabel, prevLabel, setLabelIndex, setImageIndex } from '../../../actions/image'
-import { increaseScore, isIncorrect, addPoints, removePoints, setStreak, loseLife, resetLives } from '../../../actions/score'
+import { increaseScore, isIncorrect, addPoints, removePoints, setStreak, loseLife, resetLives, addLife } from '../../../actions/score'
 import { updateImages } from '../../../actions/http'
 import { setLetters, setWord, setLastLetter } from '../../../actions/letters'
-import { setShowLetters } from '../../../actions/ui'
+import { setShowLetters, setShowImage } from '../../../actions/ui'
 // import key from 'keymaster';
+import GameOver from '../../GameOver'
 import AnimateInOutView from '../../AnimateInOutView'
 import Letter from '../../Letter'
 
@@ -51,8 +52,15 @@ class LabelContainer extends Component {
     this.props.setWord(np.label.description)
   }
 
+  gameOver(){
+    this.props.navigator.push({
+      component: GameOver,
+      navigationBarHidden: true,
+    })
+  }
+
   onKeyPress(text){
-    if (this.props.showLetters){
+    if (this.props.showLetters && this.props.showImage){
       var key = text[text.length-1]
       this.props.setLastLetter(key.toLowerCase())
 
@@ -78,7 +86,7 @@ class LabelContainer extends Component {
       
       if (!hasFound){
         if (this.props.lives === 1){
-          
+            this.gameOver()
           //game over
         }
         this.props.loseLife()
@@ -93,12 +101,10 @@ class LabelContainer extends Component {
   }
 
   nextLabel(){
-    console.log('next')
-
     console.log(this.props.labelIndex)
     if (this.props.gameType === 'mashUp'){
         if (this.props.imageIndex < this.props.images.length -1){
-         this.props.nextImage()
+         this.transitionImage()
         } else {
           this.props.setImageIndex(0)
           this.props.setLabelIndex(this.props.labelIndex + 1)
@@ -111,6 +117,17 @@ class LabelContainer extends Component {
       this.transition()
         // handle image complete
     }
+  }
+
+  transitionImage(){
+    this.props.setShowImage(false)
+    setTimeout(() => {
+      addLife()
+      this.props.nextImage()
+    },200)
+    setTimeout(() => {
+      this.props.setShowImage(true)
+    },200)
   }
 
   transition(){
@@ -216,6 +233,7 @@ const mapStateToProps = state => ({
   labelIndex: state.image.labelIndex,
   images: state.data,
   showLetters: state.ui.showLetters,
+  showImage: state.ui.showImage,
   gameType: state.score.gameType
 
 })
@@ -238,7 +256,9 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   removePoints,
   setStreak,
   loseLife,
-  resetLives
+  resetLives,
+  setShowImage,
+  addLife
 }, dispatch)
 
 export default connect(

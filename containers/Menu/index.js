@@ -73,6 +73,7 @@ class Menu extends Component<Props> {
 
   goToImage(index){
     console.log(index)
+    this.props.setGameType('image')
     this.props.setLabelIndex(0)
     this.props.setImageIndex(index)
     setTimeout(() => {
@@ -108,10 +109,12 @@ class Menu extends Component<Props> {
 
     return(
       <ScrollView>
-      {/*<Header 
+      <Header 
       image={images[images.length-1]}
-      score={this.props.score}/>*/}
+      score={this.props.score}/>
       <MashUp 
+        copy1="Mash"
+        copy2="up"
         onMashUp={this.onMashUp.bind(this)}
         navigator={this.props.navigator}
         image1={images[images.length-2].thumb}

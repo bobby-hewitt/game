@@ -101,8 +101,8 @@ export default class MashUp extends Component {
 
             <View style={styles.textContainer}>
               <View style={styles.circle}>
-              <Text style={styles.buttonText}>Mash</Text>
-              <Text style={styles.buttonText}>Up</Text>
+              <Text style={styles.buttonText}>{this.props.copy1}</Text>
+              <Text style={styles.buttonText}>{this.props.copy2}</Text>
               </View>
             </View>
           </View>

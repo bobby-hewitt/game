@@ -38,19 +38,21 @@ class SceneContainer extends Component {
 
         <Image source={{uri: this.props.image.image}} style={styles.image}/>
         <BackButton navigator={this.props.navigator}/> 
+        <Score score={this.props.score} highScore={this.props.highScore}  lives={this.props.lives}/>
         {this.props.points.map((p, i) => {
           return(
             <Points key={i} index={i} value={p} lives={this.props.lives}/>
           )
         })}
-        <Score score={this.props.score} lives={this.props.lives}/>
-        <LabelContainer />  
+        
+        <LabelContainer navigator={this.props.navigator} />  
       </View>
     );
   }
 }
 
 const mapStateToProps = state => ({
+  highScore: state.score.highScore,
   lives: state.score.lives,
   score: state.score.score,
   points: state.score.points,

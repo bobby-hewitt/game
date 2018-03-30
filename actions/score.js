@@ -15,10 +15,27 @@ export const isIncorrect = (payload) => {
   }
 }
 
+export const setHighScore = (payload) => {
+  return dispatch => {
+    dispatch({
+      type: 'SET_HIGH_SCORE',
+      payload
+    })
+  }
+}
+
 export const loseLife = (payload) => {
   return dispatch => {
     dispatch({
       type: 'LOSE_LIFE'
+    })
+  }
+}
+
+export const addLife = (payload) => {
+  return dispatch => {
+    dispatch({
+      type: 'ADD_LIFE'
     })
   }
 }
