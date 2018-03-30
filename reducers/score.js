@@ -7,6 +7,7 @@ const initialState = {
   streak: false,
   lives: 20,
   highScore: 0,
+  newLives:[]
 }
 
 export default (state = initialState, action) => {
@@ -22,9 +23,19 @@ export default (state = initialState, action) => {
         lives:state.lives -1
       }
     case 'ADD_LIFE':
+      var newLives = Object.assign([], state.newLives)
+      newLives.push('')
+      console.log('adddddding')
       return {
         ...state,
-        lives:state.lives +1
+        lives:state.lives +1,
+        newLives: newLives
+      }
+    case 'RESET_NEW_LIVES':
+      return {
+        ...state,
+        lives:state.lives +1,
+        newLives: []
       }
     case 'RESET_LIVES':
       return {
@@ -52,6 +63,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         points: [],
+        newLives:[],
         lives:20,
         score:0,
         streak: false,

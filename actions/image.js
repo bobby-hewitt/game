@@ -23,6 +23,15 @@ export const setImageIndex = (payload) => {
   }
 }
 
+export const setSoloImageIndex = (payload) => {
+  return dispatch => {
+    dispatch({
+      type: 'SET_SOLO_IMAGE_INDEX',
+      payload
+    })
+  }
+}
+
 
 export const setLabelIndex = (payload) => {
   return dispatch => {

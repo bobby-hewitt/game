@@ -17,3 +17,12 @@ export const setShowImage = (payload) => {
 }
 
 
+export const setImageIsLoaded = (payload) => {
+  return dispatch => {
+    dispatch({
+      type: 'IMAGE_IS_LOADED',
+    })
+  }
+}
+
+

@@ -43,15 +43,15 @@ class AnimateInOutView extends Component {
     Animated.sequence([
       Animated.timing(          // Uses easing functions
         this.state.marginLeft,    // The value to drive
-        {toValue: 30, duration:50}            // Configuration
+        {toValue: 30, duration:25}            // Configuration
       ),
       Animated.timing(          // Uses easing functions
         this.state.marginLeft,    // The value to drive
-        {toValue: -30, duration:100}            // Configuration
+        {toValue: -30, duration:50}            // Configuration
       ),
       Animated.timing(          // Uses easing functions
         this.state.marginLeft,    // The value to drive
-        {toValue: 0, duration:50}            // Configuration
+        {toValue: 0, duration:25}            // Configuration
       )
     ]).start(); 
   }

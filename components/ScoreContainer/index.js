@@ -32,12 +32,6 @@ export default class Score extends Component {
    //  }
   }
 
-  componentDidMount(){
-    setInterval(() => {
-      console.log(this.props.highScore)
-    },1000)
-    console.log(this.props.highScore)
-  }
 
 
 
@@ -58,15 +52,15 @@ export default class Score extends Component {
           <Text style={styles.livesText}>{this.props.highScore}</Text>
         </View>
       <View style={styles.livesContainer}>
-        <Animated.View style={{transform: [{scale: this.state.scaleAnim}] }}>
+        
           
 
 
-          <View style={styles.row}>
+          
             <Image resizeMode="contain" source={require('../../assets/images/heart.png')} style={styles.heart} />
             <Text style={styles.livesText}>{this.props.lives}</Text>
-          </View>
-        </Animated.View>
+          
+        
         </View>
 
         <View style={styles.scoreContainer}>
@@ -80,35 +74,32 @@ export default class Score extends Component {
 
 const styles = StyleSheet.create({
   container:{
-    width:120,
+    flex:1,
     position:'absolute',
     top:30,
+    left:65,
     right:15,
-    flexDirection:'column'
+    flexDirection:'row'
   },
   scoreContainer:{
+    flex:1,
     height:40,
-    flexDirection:'row',
-    backgroundColor:'rgb(77,179,229)',
-    alignItems:'center',
-    justifyContent:'center'
+    alignItems:'flex-start',
+     backgroundColor:'rgb(96,95,97)',
   },
   livesContainer:{
+    flex:1,
     height:40,
-    flexDirection:'row',
-    backgroundColor:'rgb(66,65,67)',
-    paddingHorizontal:10,
-    alignItems:'center',
-    justifyContent:'center'
+    alignItems:'flex-start',
+    backgroundColor:'rgb(76,75,77)',
+
   },
   highScoreContainer:{
+    flex:1,
     height:40,
-    flexDirection:'row',
-    backgroundColor:'rgb(66,65,67)',
-    paddingHorizontal:10,
-    alignItems:'center',
-    justifyContent:'center',
-        backgroundColor:'rgba(220,53,89,1)'
+   alignItems:'flex-start',
+
+        backgroundColor:'rgb(96,95,97)',
   },
   row:{
     width:120,
@@ -128,8 +119,8 @@ const styles = StyleSheet.create({
     
   },
   livesText:{
-    width:120,
-    marginLeft:80,
+    marginLeft:35,
+    
     
     fontFamily:'KannadaSangamMN',
     color:'white',

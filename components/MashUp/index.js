@@ -138,60 +138,65 @@ const styles = StyleSheet.create({
     
   },
   textContainer:{
+    shadowOffset:{  width: 5,  height: 5, blur:200  },
+    shadowColor: 'black',
+    shadowOpacity: 0.3,
     position:'absolute',
-    top:30,
-    left:30,
-    right:30,
-    bottom:30,
-    borderStyle:'solid',
-    borderWidth:10,
-    borderColor:'rgba(220,53,89,1)',
+    top:15,
+    left:15,
+    right:15,
+    bottom:15,
+    
      alignItems:'center',
     justifyContent:'center',
-     backgroundColor:'rgba(255,255,255,0)'
+     backgroundColor:'rgba(16,16,16,0)'
   },
   circle:{
+    shadowOffset:{  width: 5,  height: 5, blur:200  },
+    shadowColor: 'black',
+    shadowOpacity: 0.6,
     borderStyle:'solid',
     borderWidth:10,
     borderColor:'#fefefe',
     borderRadius:0,
-    height:200,
-    width:200,
+    height:170,
+    width:170,
      alignItems:'center',
     justifyContent:'center',
-     backgroundColor:'rgba(220,53,89,1)'
+     backgroundColor:'rgba(16,16,16,0.5)'
   },
   button:{
     alignItems:'center',
     justifyContent:'center',
-    width:Dimensions.get('window').width /3-20,
-    height:Dimensions.get('window').width /3-20,
+    width:Dimensions.get('window').width /3-10,
+    height:Dimensions.get('window').width /3-10,
   },
   buttonText:{
     margin:-5,
     fontFamily:'BacktoBlackDemo',
     fontSize:50,
-    lineHeight:66,
+    lineHeight:60,
     fontWeight:"900",
-    color:'#fefefe'
+    color:'#fefefe',
+    paddingHorizontal:5,
   },
   row:{
     flexDirection:'row',
   },
   imageContainer:{
-    width:Dimensions.get('window').width /3-20,
-    height:Dimensions.get('window').width /3-20,
+    width:Dimensions.get('window').width /3-10,
+    height:Dimensions.get('window').width /3-10,
   },
   image:{
-    width:Dimensions.get('window').width /3-20,
-    height:Dimensions.get('window').width /3-20,
+    width:Dimensions.get('window').width /3-10,
+    height:Dimensions.get('window').width /3-10,
   },
   container:{
     alignItems:'center',
     justifyContent: 'center',
     width:Dimensions.get('window').width,
     height:Dimensions.get('window').width,
-    backgroundColor:'rgba(255,255,255,0.6)',
+    // backgroundColor:'rgba(255,255,255,0.6)',
     
     flex:1
   },

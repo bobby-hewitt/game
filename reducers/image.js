@@ -2,6 +2,7 @@
 const initialState = {
   imageIndex: 0,
   labelIndex: 0,
+  soloImageIndex: 0,
 }
 
 export default (state = initialState, action) => {
@@ -36,6 +37,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         imageIndex: action.payload,
+      }
+    case 'SET_SOLO_IMAGE_INDEX':
+      return {
+        ...state,
+        soloImageIndex: action.payload,
       }
     default:
       return state

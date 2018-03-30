@@ -37,7 +37,6 @@ export default class Header extends Component {
         <View>
             <View style={styles.container}>
               <Text style={[styles.title]}>What would Google do?</Text>
-              <Text style={styles.text}>Average score: <Text style={[styles.text]}></Text>{'100'}</Text>      
             </View>
         </View>
     );
@@ -64,8 +63,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flexDirection:'column',
     paddingTop:30,
-    paddingBottom:20,
-    backgroundColor:'rgba(252,232,78,1)',
+
+    
     flex:1
   },
   image: {

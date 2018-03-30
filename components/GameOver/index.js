@@ -49,22 +49,23 @@ class GameOver extends Component {
   render() {
     return (
       <View style={styles.container}>
-      
-
-        <View style={styles.highScoreContainer}>
-            <Text style={styles.newhighScore}>{this.state.highScore ? 'NEW HIGH SCORE!' : 'GAME OVER'}</Text>
-            <Text style={styles.highScore}>{this.state.score}</Text>
-          </View>
-    
-      <View style={styles.playAgainContainer}>
-        <MashUp 
-        copy1="Play"
-        copy2="Again"
-        onMashUp={this.onMashUp.bind(this)}
-        navigator={this.props.navigator}
-        
-          />
+      <Image source={{uri: this.props.images[this.props.imageIndex -1].image }} style={styles.absolute} />
+      <View style={styles.imageOverlay}>
       </View>
+      <View style={styles.absolute}>
+         <View style={styles.mashUpContainer}>
+            <Text style={styles.newhighScore}>{this.state.highScore ? 'New High Score!' : 'Game Over'}</Text>
+            <Text style={styles.highScore}>{'Score: ' + this.state.score}</Text>
+   </View>
+      <View style={styles.mashUpContainer}>
+          <MashUp 
+          copy1="Play"
+          copy2="Again"
+          onMashUp={this.onMashUp.bind(this)}
+          navigator={this.props.navigator}/>
+        </View>   
+      </View>
+        
     </View>
     );
   }
@@ -104,29 +105,44 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
   },
-  highScoreContainer:{
-    flex:1,
+  imageOverlay:{
+    position:'absolute',
+    top:0,
+    left: 0,
+    height:Dimensions.get('window').height,
     width:Dimensions.get('window').width,
-    marginBottom:0,
+    backgroundColor:'rgba(16,16,16,0.3)'
+  },
+  absolute:{
+    position:'absolute',
+    top:0,
+    left: 0,
+    height:Dimensions.get('window').height,
+    width:Dimensions.get('window').width,
+  },
+  mashUpContainer:{
     alignItems:'center',
     justifyContent:'center',
-    backgroundColor: 'rgb(252,232,78)'
+    height:Dimensions.get('window').height/2,
+    width:Dimensions.get('window').width,
+    backgroundColor:'transparent',
   },
   newhighScore:{
-     fontFamily:'KannadaSangamMN',
-    color:'rgb(66,65,67)',
+     fontFamily:'BacktoBlackDemo',
+    color:'#fefefe',
     textAlign:'center',
      fontWeight: "900",
-     fontSize:40,
-     lineHeight:40,
+     fontSize:55,
+     lineHeight:75,
+     paddingVertical:20,
+     marginTop:100,
      fontWeight:'700'
   },
   highScore:{
-     fontFamily:'KannadaSangamMN',
-    color:'rgb(66,65,67)',
-  textAlign:'center',
+     fontFamily:'BacktoBlackDemo',
+   color:'#fefefe',
+    textAlign:'center',
      fontWeight: "900",
      fontSize:40,
      lineHeight:40,

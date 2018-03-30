@@ -2,7 +2,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import React, { Component } from 'react';
 import { nextImage, prevImage, nextLabel, prevLabel, setLabelIndex, setImageIndex } from '../../../actions/image'
-import { increaseScore, isIncorrect, addPoints, removePoints, setStreak, loseLife, resetLives, addLife } from '../../../actions/score'
+import { increaseScore, isIncorrect, addPoints, removePoints, setStreak, loseLife, resetLives, addLife, resetNewLives } from '../../../actions/score'
 import { updateImages } from '../../../actions/http'
 import { setLetters, setWord, setLastLetter } from '../../../actions/letters'
 import { setShowLetters, setShowImage } from '../../../actions/ui'
@@ -106,7 +106,8 @@ class LabelContainer extends Component {
         if (this.props.imageIndex < this.props.images.length -1){
          this.transitionImage()
         } else {
-          this.props.setImageIndex(0)
+          this.transitionImage(true)
+          
           this.props.setLabelIndex(this.props.labelIndex + 1)
           return
         }
@@ -119,25 +120,60 @@ class LabelContainer extends Component {
     }
   }
 
-  transitionImage(){
+  addLife(){
+    if (this.props.lives < 20){
+      this.props.addLife()
+    }
+  }
+
+  transitionImage(reset){
     this.props.setShowImage(false)
     setTimeout(() => {
-      addLife()
-      this.props.nextImage()
+      var i =0;
+      var interval = setInterval(() => {
+        if (i < 3){
+          i++
+          this.addLife()
+        } else {
+          clearInterval(interval)
+        }
+      },150)
+      console.log('adding life')
+      
+      
+      if (reset){
+        this.props.setImageIndex(0)
+      } else {
+        this.props.nextImage()
+      }
     },200)
     setTimeout(() => {
       this.props.setShowImage(true)
     },200)
+
   }
 
   transition(){
     this.props.setShowLetters(false)
     setTimeout(() => {
+      var i = 0;
+      var interval = setInterval(() => {
+        if (i < 3){
+          i++
+          this.addLife()
+        } else {
+          clearInterval(interval)
+        }
+      },150)
+      console.log('adding life')
       this.props.nextLabel()
     },200)
     setTimeout(() => {
       this.props.setShowLetters(true)
     },200)
+
+
+ 
   }
 
   renderRows(letters){
@@ -227,9 +263,10 @@ const mapStateToProps = state => ({
   letters: state.letters.letters,
   lastLetter: state.letters.lastLetter,
   word: state.letters.word,
-  image: state.data[state.image.imageIndex],
-  label: state.data[state.image.imageIndex].labels[state.image.labelIndex],
+  image: state.score.gameType === 'mashUp' ? state.data[state.image.imageIndex] : state.data[state.image.soloImageIndex],
+  label: state.score.gameType === 'mashUp' ? state.data[state.image.imageIndex].labels[state.image.labelIndex] : state.data[state.image.soloImageIndex].labels[state.image.labelIndex],
   imageIndex: state.image.imageIndex,
+  soloImageIndex: state.image.soloImageIndex,
   labelIndex: state.image.labelIndex,
   images: state.data,
   showLetters: state.ui.showLetters,
@@ -258,6 +295,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   loseLife,
   resetLives,
   setShowImage,
+  resetNewLives,
   addLife
 }, dispatch)
 
@@ -289,6 +327,7 @@ const styles = StyleSheet.create({
   },
   row:{
     flex:1,
+    paddingVertical:5,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center'

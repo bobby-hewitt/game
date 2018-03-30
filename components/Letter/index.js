@@ -30,7 +30,7 @@ export default class Letter extends Component {
         this.animateScale(1)
         console.log('last letter')
     } else if (np.lastLetter && !this.props.lastLetter){
-      this.animateScale(1.5)
+      this.animateScale(1.3)
     }
   }
 
@@ -46,7 +46,7 @@ export default class Letter extends Component {
   animateScale(toValue){
      Animated.spring(          // Uses easing functions
        this.state.scaleAnim,    // The value to drive
-       {toValue, duration:200}            // Configuration
+       {toValue, duration:100}            // Configuration
      ).start(); 
   }
 
@@ -54,7 +54,7 @@ export default class Letter extends Component {
 
   render() {
     return (
-      <Animated.View style={{transform: [{scale: this.state.scaleAnim}] }}>
+      <Animated.View style={{transform: [{scale: this.state.scaleAnim}], paddingHorizontal:2 }}>
         <Text style={styles.letter}>{this.props.text}</Text>
       </Animated.View>
     );
@@ -67,18 +67,16 @@ const styles = StyleSheet.create({
     shadowOffset:{  width: 5,  height: 5,  },
     shadowColor: 'black',
     shadowOpacity: 0.6,
-    borderWidth:2,
-    borderStyle: 'solid',
-    borderColor:'#959595',
+    borderRadius:3,
+    paddingTop:3,
     backgroundColor:'#fefefe',
     color:'black',
-    width:30,
+    width:26,
     lineHeight:26,
-    height:40,
+    height:35,
     fontSize: 20,
     textAlign: 'center',
     margin: 3,
-    padding:4,
   },
 });
 

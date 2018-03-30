@@ -6,7 +6,7 @@
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import React, { Component } from 'react';
-import { nextImage, prevImage, nextLabel, prevLabel, setImageIndex, setLabelIndex } from '../../actions/image'
+import { nextImage, prevImage, nextLabel, prevLabel, setImageIndex, setSoloImageIndex, setLabelIndex } from '../../actions/image'
 import { increaseScore, setGameType } from '../../actions/score'
 import { updateImages } from '../../actions/http'
 import ImageThumb from '../../components/ImageThumb'
@@ -75,7 +75,7 @@ class Menu extends Component<Props> {
     console.log(index)
     this.props.setGameType('image')
     this.props.setLabelIndex(0)
-    this.props.setImageIndex(index)
+    this.props.setSoloImageIndex(index)
     setTimeout(() => {
     this.props.navigator.push({
       component: Home,
@@ -86,7 +86,6 @@ class Menu extends Component<Props> {
   }
 
   renderImageRows(images){
-    console.log(images)
     var imgArr = []
 
     for (var i =0; i < images.length; i = i+3){
@@ -113,8 +112,8 @@ class Menu extends Component<Props> {
       image={images[images.length-1]}
       score={this.props.score}/>
       <MashUp 
-        copy1="Mash"
-        copy2="up"
+        copy1="Lets"
+        copy2="go"
         onMashUp={this.onMashUp.bind(this)}
         navigator={this.props.navigator}
         image1={images[images.length-2].thumb}
@@ -171,6 +170,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 	prevImage,
   setImageIndex, 
   setLabelIndex, 
+  setSoloImageIndex,
 	nextLabel, 
 	prevLabel,
 	updateImages,

@@ -16,7 +16,7 @@ import {
 } from 'react-native';
 // import LabelContainer from './LabelContainer'
 
-export default class Points extends Component {
+export default class NewLife extends Component {
 
   constructor(props){
     super(props)
@@ -48,15 +48,11 @@ export default class Points extends Component {
 
 
   render() {
-    const style = 
-      this.props.value === '10' ? styles.container1:
-      this.props.value === '20' ? styles.container2:
-      this.props.value === '30' ? styles.container3:
-      styles.container4
+    
     return (
       <Animated.View style={{opacity: this.state.fadeAnim, transform: [{translateY: this.state.posAnim}], position:'absolute', top:200, right:this.state.right}}>
-        <View style={style}>
-          <Text style={styles.letter}>{this.props.value}</Text>
+        <View style={styles.container}>
+          <Image resizeMode="contain" style={styles.image} source={require('../../assets/images/heart.png')}/>
         </View>
       </Animated.View>
     );
@@ -67,19 +63,22 @@ const styles = StyleSheet.create({
   letter: {
     fontFamily:'KannadaSangamMN',
     color:'rgb(66,65,67)',
-    fontSize: 24,
+    fontSize: 30,
     textAlign: 'center',
     lineHeight:50,
-    fontWeight:'900'
   },
-  container1: {
+  image:{
+    width:40,
+    height:40,
+  },
+  container: {
     position:'absolute',
     top:100,
     left:100,
     shadowOffset:{  width: 5,  height: 5,  },
     shadowColor: 'black',
     shadowOpacity: 0.6,
-    backgroundColor:'rgb(198,214,82)',
+    
     width:50,
     
     height:50,
@@ -87,51 +86,7 @@ const styles = StyleSheet.create({
     alignItems:'center',
     justifyContent:'center'
   },
-  container2: {
-    position:'absolute',
-    top:100,
-    left:100,
-    shadowOffset:{  width: 5,  height: 5,  },
-    shadowColor: 'black',
-    shadowOpacity: 0.6,
-    backgroundColor:'rgb(220,53,89)',
-    width:50,
-    
-    height:50,
-    borderRadius:25,
-    alignItems:'center',
-    justifyContent:'center'
-  },
-  container3: {
-    position:'absolute',
-    top:100,
-    left:100,
-    shadowOffset:{  width: 5,  height: 5,  },
-    shadowColor: 'black',
-    shadowOpacity: 0.6,
-    backgroundColor:'rgb(252,232,78)',
-    width:50,
-    
-    height:50,
-    borderRadius:25,
-    alignItems:'center',
-    justifyContent:'center'
-  },
-  container4: {
-    position:'absolute',
-    top:100,
-    left:100,
-    shadowOffset:{  width: 5,  height: 5,  },
-    shadowColor: 'black',
-    shadowOpacity: 0.6,
-    backgroundColor:'rgb(77,179,229)',
-    width:50,
-    
-    height:50,
-    borderRadius:25,
-    alignItems:'center',
-    justifyContent:'center'
-  },
+  
 });
 
 

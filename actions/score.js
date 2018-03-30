@@ -40,6 +40,15 @@ export const addLife = (payload) => {
   }
 }
 
+
+export const resetNewLives = (payload) => {
+  return dispatch => {
+    dispatch({
+      type: 'RESET_NEW_LIVES'
+    })
+  }
+}
+
 export const resetLives = (payload) => {
   return dispatch => {
     dispatch({
