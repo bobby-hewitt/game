@@ -7,7 +7,8 @@ const initialState = {
   streak: false,
   lives: 20,
   highScore: 0,
-  newLives:[]
+  newLives:[],
+  difficulty: false
 }
 
 export default (state = initialState, action) => {
@@ -67,6 +68,7 @@ export default (state = initialState, action) => {
         lives:20,
         score:0,
         streak: false,
+        difficulty:false,
 
       }
     case 'REMOVE_POINTS':
@@ -83,6 +85,16 @@ export default (state = initialState, action) => {
       return {
         ...state,
         streak:action.payload
+      }
+     case 'SELECT_DIFFICULTY':
+      return {
+        ...state,
+        difficulty:action.payload.difficulty,
+      }
+    case 'SET_DIFFICULTY':
+      return {
+        ...state,
+        difficulty:action.payload
       }
     default:
       return state

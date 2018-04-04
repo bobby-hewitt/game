@@ -2,7 +2,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import React, { Component } from 'react';
 import { nextImage, prevImage, nextLabel, prevLabel, setLabelIndex, setImageIndex } from '../../../actions/image'
-import { increaseScore, isIncorrect, addPoints, removePoints, setStreak, loseLife, resetLives, addLife, resetNewLives } from '../../../actions/score'
+import { increaseScore, isIncorrect, addPoints, removePoints, setStreak, loseLife, resetLives, addLife, resetNewLives,setDifficulty } from '../../../actions/score'
 import { updateImages } from '../../../actions/http'
 import { setLetters, setWord, setLastLetter } from '../../../actions/letters'
 import { setShowLetters, setShowImage } from '../../../actions/ui'
@@ -31,23 +31,41 @@ class LabelContainer extends Component {
   }
 
   componentWillMount(){
-    this.createWord(this.props)
+    // this.createWord(this.props)
   }
 
   componentWillReceiveProps(np){
-    if (np.label.description !== this.props.word){
+    if (!this.props.label){
+      if (np.label){
+        this.createWord(np)
+      } else {
+        return
+      }
+    }else if (np.label && np.label.description !== this.props.word){
+      console.log('next props')
       this.createWord(np)
+    } 
+  }
+
+  componentDidMount(){
+    this.focus()
+
+    if (this.props.label){
+      console.log('working here')
+      this.createWord(this.props)
     }
   }
 
   createWord(np){
+    console.log('CREATING WORD')
     var letters = []
-    for (var i = 0; i < this.props.label.description.length; i++){ 
+    for (var i = 0; i < np.label.description.length; i++){ 
       letters.push({
         letter: np.label.description[i],
         found: false
       })
     }
+
     this.props.setLetters(letters)
     this.props.setWord(np.label.description)
   }
@@ -60,8 +78,11 @@ class LabelContainer extends Component {
   }
 
   onKeyPress(text){
+
+    
     if (this.props.showLetters && this.props.showImage){
       var key = text[text.length-1]
+      if (key){
       this.props.setLastLetter(key.toLowerCase())
 
       var letters = Object.assign([], this.props.letters)
@@ -99,10 +120,12 @@ class LabelContainer extends Component {
       }
     } 
   }
+  }
 
   nextLabel(){
-    console.log(this.props.labelIndex)
+    
     if (this.props.gameType === 'mashUp'){
+        this.props.setDifficulty(false)
         if (this.props.imageIndex < this.props.images.length -1){
          this.transitionImage()
         } else {
@@ -131,16 +154,13 @@ class LabelContainer extends Component {
     setTimeout(() => {
       var i =0;
       var interval = setInterval(() => {
-        if (i < 3){
+        if (i < this.props.difficulty){
           i++
           this.addLife()
         } else {
           clearInterval(interval)
         }
       },150)
-      console.log('adding life')
-      
-      
       if (reset){
         this.props.setImageIndex(0)
       } else {
@@ -158,14 +178,14 @@ class LabelContainer extends Component {
     setTimeout(() => {
       var i = 0;
       var interval = setInterval(() => {
-        if (i < 3){
+        if (i < this.props.difficulty){
           i++
           this.addLife()
         } else {
           clearInterval(interval)
         }
       },150)
-      console.log('adding life')
+      
       this.props.nextLabel()
     },200)
     setTimeout(() => {
@@ -188,13 +208,13 @@ class LabelContainer extends Component {
     
     var r = (
       <View style={styles.lettersContainer}>
-      {rows.map((r,i) => {
+      { rows.map((r,i) => {
         return(
           <View key={i} style={styles.row}>
             {r.map((letter, j) => {
               if (letter.found){
                 var lastLetter = letter.letter === this.props.lastLetter
-                console.log('IS LAST LETTER', lastLetter)
+                
                 return(
                   <Letter  
                     lastLetter={lastLetter}
@@ -223,8 +243,11 @@ class LabelContainer extends Component {
   }
 
   render() {
+   
+
     return (
       <TouchableWithoutFeedback onPress={this.focus.bind(this)}>
+        
         <View style={styles.container}  >
           <View style={styles.input}>
             <TextInput
@@ -242,20 +265,24 @@ class LabelContainer extends Component {
               
               onChangeText={(text) => this.onKeyPress(text)}/>
           </View>
-            
+            {this.props.label &&
               <AnimateInOutView 
                 isVisible={this.props.showLetters}
                 incorrectToggle={this.props.incorrectToggle}>
                 {this.renderRows(this.props.letters)}
               </AnimateInOutView>
+            }
             
         </View>
+        
       </TouchableWithoutFeedback>
     );
+
   }
 }
 
 const mapStateToProps = state => ({
+  difficulty: state.score.difficulty,
   lives: state.score.lives,
   streak: state.score.streak,
   score: state.score.score,
@@ -296,7 +323,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   resetLives,
   setShowImage,
   resetNewLives,
-  addLife
+  addLife,
+  setDifficulty
 }, dispatch)
 
 export default connect(

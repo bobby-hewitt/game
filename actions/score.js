@@ -49,6 +49,15 @@ export const resetNewLives = (payload) => {
   }
 }
 
+export const setDifficulty = (payload) => {
+  return dispatch => {
+    dispatch({
+      type: 'SET_DIFFICULTY',
+      payload
+    })
+  }
+}
+
 export const resetLives = (payload) => {
   return dispatch => {
     dispatch({

@@ -31,7 +31,7 @@ export default (state = initialState, action) => {
     case 'SET_LABEL_INDEX':
       return {
         ...state,
-        labelIndex: 0,
+        labelIndex: action.payload,
       }
      case 'SET_IMAGE_INDEX':
       return {
@@ -42,6 +42,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         soloImageIndex: action.payload,
+      }
+    case 'SELECT_DIFFICULTY':
+      return {
+        ...state,
+        labelIndex:action.payload.labelIndex,
       }
     default:
       return state

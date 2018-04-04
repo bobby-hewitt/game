@@ -9,6 +9,7 @@ import BackButton from '../BackButton'
 import Score from '../ScoreContainer'
 import Points from '../Points'
 import NewLife from '../NewLife'
+import SelectDifficulty from '../SelectDifficulty'
 import {
   Platform,
   StyleSheet,
@@ -36,19 +37,20 @@ class SceneContainer extends Component {
   }
 
   componentWillReceiveProps(np){
-    console.log(np)
     if (!np.showImage && this.props.showImage){
       this.animateImage(0,0)
     } else if (np.showImage && !this.props.showImage && this.props.imageIsLoaded) {
-      this.animateImage(1,1)
+      console.log('should animate in')
+      this.animateImage(1,1) 
     } 
     else if (np.imageIsLoaded && !this.props.imageIsLoaded){
+      console.log('should animate in')
       this.animateImage(1,1)
     }
   }
 
   animateImage(opacity, position){
-    console.log('animating')
+   
      Animated.parallel([
         Animated.timing(          // Uses easing functions
           this.state.posAnim,// The value to drive
@@ -79,14 +81,19 @@ class SceneContainer extends Component {
             <NewLife key={i} />
           )
         })}
-        
-        <LabelContainer navigator={this.props.navigator} />  
+        {!this.props.difficulty &&
+          <SelectDifficulty />
+        }
+        {this.props.difficulty &&
+          <LabelContainer navigator={this.props.navigator} />  
+        }
       </View>
     );
   }
 }
 
 const mapStateToProps = state => ({
+  difficulty: state.score.difficulty,
   imageIsLoaded: state.ui.imageIsLoaded,
   highScore: state.score.highScore,
   newLives: state.score.newLives,

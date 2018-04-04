@@ -34,6 +34,7 @@ export const setSoloImageIndex = (payload) => {
 
 
 export const setLabelIndex = (payload) => {
+  console.log('setting Label index', payload)
   return dispatch => {
     dispatch({
       type: 'SET_LABEL_INDEX',

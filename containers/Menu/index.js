@@ -72,7 +72,7 @@ class Menu extends Component<Props> {
   }
 
   goToImage(index){
-    console.log(index)
+    
     this.props.setGameType('image')
     this.props.setLabelIndex(0)
     this.props.setSoloImageIndex(index)

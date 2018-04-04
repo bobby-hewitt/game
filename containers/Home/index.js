@@ -7,7 +7,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import React, { Component } from 'react';
 import { nextImage, prevImage, nextLabel, prevLabel } from '../../actions/image'
-import { increaseScore } from '../../actions/score'
+import { increaseScore, setDifficulty } from '../../actions/score'
 import { updateImages } from '../../actions/http'
 import {
   Platform,
@@ -32,6 +32,7 @@ class Home extends Component<Props> {
 
   componentWillMount(){
     // this.getSavedData()
+    
   }
 
   getSavedData(){
