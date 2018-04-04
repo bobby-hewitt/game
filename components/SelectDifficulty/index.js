@@ -89,10 +89,10 @@ const mapStateToProps = state => ({
   lives: state.score.lives,
   score: state.score.score,
   points: state.score.points,
-  image: state.data[state.image.imageIndex],
+  image: state.data.images[state.image.imageIndex],
   imageIndex: state.image.imageIndex,
   labelIndex: state.image.imageIndex,
-  images: state.data,
+  images: state.data.images,
   showImage: state.ui.showImage,
 })
 

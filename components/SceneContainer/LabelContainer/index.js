@@ -10,6 +10,7 @@ import { setShowLetters, setShowImage } from '../../../actions/ui'
 import GameOver from '../../GameOver'
 import AnimateInOutView from '../../AnimateInOutView'
 import Letter from '../../Letter'
+import Menu from '../../../containers/Menu'
 
 import {
   Platform,
@@ -123,15 +124,15 @@ class LabelContainer extends Component {
   }
 
   nextLabel(){
-    
     if (this.props.gameType === 'mashUp'){
         this.props.setDifficulty(false)
         if (this.props.imageIndex < this.props.images.length -1){
          this.transitionImage()
         } else {
-          this.transitionImage(true)
-          
-          this.props.setLabelIndex(this.props.labelIndex + 1)
+          this.props.navigator.push({
+            component: Menu,
+            navigationBarHidden: true,
+          })
           return
         }
       return
@@ -290,16 +291,15 @@ const mapStateToProps = state => ({
   letters: state.letters.letters,
   lastLetter: state.letters.lastLetter,
   word: state.letters.word,
-  image: state.score.gameType === 'mashUp' ? state.data[state.image.imageIndex] : state.data[state.image.soloImageIndex],
-  label: state.score.gameType === 'mashUp' ? state.data[state.image.imageIndex].labels[state.image.labelIndex] : state.data[state.image.soloImageIndex].labels[state.image.labelIndex],
+  image: state.data.images[state.image.imageIndex],
+  label: state.data.images[state.image.imageIndex].labels[state.image.labelIndex],
   imageIndex: state.image.imageIndex,
   soloImageIndex: state.image.soloImageIndex,
   labelIndex: state.image.labelIndex,
-  images: state.data,
+  images: state.data.images,
   showLetters: state.ui.showLetters,
   showImage: state.ui.showImage,
   gameType: state.score.gameType
-
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({

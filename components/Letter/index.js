@@ -30,13 +30,13 @@ export default class Letter extends Component {
         this.animateScale(1)
         console.log('last letter')
     } else if (np.lastLetter && !this.props.lastLetter){
-      this.animateScale(1.3)
+      this.animateScale(1.7)
     }
   }
 
   componentDidMount(){
     if(this.props.lastLetter){
-      this.animateScale(2)
+      this.animateScale(1.3)
       console.log('last letter')
     }
   }
@@ -44,10 +44,16 @@ export default class Letter extends Component {
 
 
   animateScale(toValue){
-     Animated.spring(          // Uses easing functions
-       this.state.scaleAnim,    // The value to drive
-       {toValue, duration:100}            // Configuration
-     ).start(); 
+    Animated.sequence([
+      Animated.timing(          
+         this.state.scaleAnim,    
+         {toValue, duration:200}           
+      ),
+      Animated.timing(         
+         this.state.scaleAnim,  
+         {toValue: 1, duration:200}   
+      )
+    ]).start(); 
   }
 
 

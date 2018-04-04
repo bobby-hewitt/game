@@ -36,7 +36,7 @@ export default class Header extends Component {
     return (
         <View>
             <View style={styles.container}>
-              <Text style={[styles.title]}>What would Google do?</Text>
+              <Text style={[styles.title]}>do?</Text>
             </View>
         </View>
     );

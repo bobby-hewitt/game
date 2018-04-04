@@ -12,6 +12,8 @@ import { updateImages } from '../../actions/http'
 import ImageThumb from '../../components/ImageThumb'
 import MashUp from '../../components/MashUp'
 import Header from '../../components/Header'
+import Loading from '../../components/Loading'
+import Completed from '../../components/Completed'
 import Home from '../Home'
 import {
   Platform,
@@ -39,27 +41,55 @@ class Menu extends Component<Props> {
    constructor(props){
     super(props)
     this.state = {
-      
+      hasCompleted: false,
+      isLoading: true,
+      isLoadingTransition: false
     }
   }
 
-  componentWillMount(){
-    if (!this.props.images || this.props.images.length < 1){
-      this.getSavedData()
-    }
+componentWillMount(){
+  var self = this;
+  let now = (new Date).getTime()
+  let comparator = parseInt(self.props.updateId) + (1000 * 60 * 60 * 12)
+  console.log(self.props.updateId)
+  console.log(now, comparator, now - comparator, Math.floor(self.props.images.length / 5))
+  if (now - comparator > 0 && self.props.imageIndex >= Math.floor(self.props.images.length / 5)){
+    self.getSavedData()
+  } else if (self.props.imageIndex >= self.props.images.length -1){
+    
+    self.setState({hasCompleted: true, isLoading: false})
+  } else {
+    self.setState({hasCompleted: false}, self.loadingTransition.bind(self))
+  }
+}
+
+  loadingTransition(){
+    setTimeout(() => {
+      this.setState({isLoadingTransition: true}, () => {
+        setTimeout(() => {
+          console.log('setting to false')
+          this.setState({isLoading: false, isLoadingTransition: false})
+        }, 500)
+      })
+    },300)
   }
 
-    getSavedData(){
+  getSavedData(){
+    console.log('getting data')
     let self = this;
-    DB.ref('/images').once('value', function(snapshot){
+    DB.ref('/').once('value', function(snapshot){
       var images = []
       var results = snapshot.val()
-      const keys = Object.keys(results)
+      var imgRes = results.images
+      const id = results.update.id
+      const keys = Object.keys(imgRes)
       for (var i = 0; i < keys.length; i++){
-        images.push(results[keys[i]])
-        
+        images.push(imgRes[keys[i]])
       }
-      self.props.updateImages(images)
+
+      self.props.updateImages({images, id})
+      self.props.setImageIndex(0)
+      self.loadingTransition()
     })
   }
 
@@ -72,7 +102,6 @@ class Menu extends Component<Props> {
   }
 
   goToImage(index){
-    
     this.props.setGameType('image')
     this.props.setLabelIndex(0)
     this.props.setSoloImageIndex(index)
@@ -107,10 +136,12 @@ class Menu extends Component<Props> {
 
 
     return(
-      <ScrollView>
-      <Header 
+      <View style={styles.container}>
+      { /*<Header 
       image={images[images.length-1]}
-      score={this.props.score}/>
+      score={this.props.score}/>*/}
+      {!this.state.isLoading && !this.state.hasCompleted &&
+        
       <MashUp 
         copy1="Lets"
         copy2="go"
@@ -126,22 +157,17 @@ class Menu extends Component<Props> {
         image8={images[images.length-9].thumb}
         image9={images[images.length-10].thumb}
           />
-        {imgArr.map((row, i) => {
-          return(
-            <View key={i} style={styles.row}>
-              {row.map((card, j) => {
-                if (card.image){
-                return(
-                  <ImageThumb key={i + ' ' + j} image={card.image.thumb} index={card.index} goToImage={this.goToImage.bind(this)}/>
-                )
-                } else return <View key={i} />
-              })
 
-              }
-            </View>
-          )
-        })}
-      </ScrollView>
+      }
+      {!this.state.isLoading && this.state.hasCompleted &&
+        <Completed 
+          updateId={this.props.updateId}/ >
+      }
+      {this.state.isLoading &&
+        <Loading 
+          isLoadingTransition={this.state.isLoadingTransition}/>
+      }
+      </View>
     )
 
     
@@ -162,7 +188,9 @@ class Menu extends Component<Props> {
 
 const mapStateToProps = state => ({
   score: state.score.score,
-  images: state.data
+  imageIndex: state.image.imageIndex,
+  images: state.data.images,
+  updateId: state.data.updateId
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({

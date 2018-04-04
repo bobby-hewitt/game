@@ -56,6 +56,7 @@ class GameOver extends Component {
          <View style={styles.mashUpContainer}>
             <Text style={styles.newhighScore}>{this.state.highScore ? 'New High Score!' : 'Game Over'}</Text>
             <Text style={styles.highScore}>{'Score: ' + this.state.score}</Text>
+            <Text style={styles.word}>{this.props.word}</Text>
    </View>
       <View style={styles.mashUpContainer}>
           <MashUp 
@@ -65,7 +66,6 @@ class GameOver extends Component {
           navigator={this.props.navigator}/>
         </View>   
       </View>
-        
     </View>
     );
   }
@@ -75,10 +75,11 @@ const mapStateToProps = state => ({
   lives: state.score.lives,
   score: state.score.score,
   points: state.score.points,
-  image: state.data[state.image.imageIndex],
+  image: state.data.images[state.image.imageIndex],
   imageIndex: state.image.imageIndex,
   labelIndex: state.image.imageIndex,
-  images: state.data,
+  images: state.data.images,
+  word: state.letters.word,
   highScore: state.score.highScore,
 })
 
@@ -138,6 +139,15 @@ const styles = StyleSheet.create({
      paddingVertical:20,
      marginTop:100,
      fontWeight:'700'
+  },
+  word:{
+    color:'#fefefe',
+    textAlign:'center',
+     fontWeight: "700",
+     fontSize:40,
+     lineHeight:75,
+     paddingVertical:20,
+     marginTop:30,
   },
   highScore:{
      fontFamily:'BacktoBlackDemo',

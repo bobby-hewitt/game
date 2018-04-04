@@ -83,10 +83,10 @@ class Home extends Component<Props> {
 }
 
 const mapStateToProps = state => ({
-	image: state.data[state.image.imageIndex],
+	image: state.data.images[state.image.imageIndex],
   score: state.score,
   imageIndex: state.image.imageIndex,
-  images: state.data
+  images: state.data.images
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({

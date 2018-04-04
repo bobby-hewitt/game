@@ -146,10 +146,9 @@ const styles = StyleSheet.create({
     left:15,
     right:15,
     bottom:15,
-    
-     alignItems:'center',
+    alignItems:'center',
     justifyContent:'center',
-     backgroundColor:'rgba(16,16,16,0)'
+    backgroundColor:'rgba(16,16,16,0)'
   },
   circle:{
     shadowOffset:{  width: 5,  height: 5, blur:200  },
@@ -161,9 +160,9 @@ const styles = StyleSheet.create({
     borderRadius:0,
     height:170,
     width:170,
-     alignItems:'center',
+    alignItems:'center',
     justifyContent:'center',
-     backgroundColor:'rgba(16,16,16,0.5)'
+    backgroundColor:'rgba(16,16,16,0.5)'
   },
   button:{
     alignItems:'center',
@@ -174,8 +173,8 @@ const styles = StyleSheet.create({
   buttonText:{
     margin:-5,
     fontFamily:'BacktoBlackDemo',
-    fontSize:50,
-    lineHeight:60,
+    fontSize:40,
+    lineHeight:50,
     fontWeight:"900",
     color:'#fefefe',
     paddingHorizontal:5,

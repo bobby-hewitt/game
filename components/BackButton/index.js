@@ -52,8 +52,8 @@ const styles = StyleSheet.create({
     justifyContent:'center',
     backgroundColor:'rgb(66,65,67)',
     position:'absolute',
-    top:30,
-    left:15,
+    top:5,
+    left:5,
   },
 
   image: {

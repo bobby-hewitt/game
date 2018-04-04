@@ -76,9 +76,9 @@ const styles = StyleSheet.create({
   container:{
     flex:1,
     position:'absolute',
-    top:30,
-    left:65,
-    right:15,
+    top:5,
+    left:55,
+    right:5,
     flexDirection:'row'
   },
   scoreContainer:{

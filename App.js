@@ -5,6 +5,7 @@ import {
   Text,
   View,
   NavigatorIOS,
+  StatusBar
 } from 'react-native';
 
 import { Provider } from 'react-redux'
@@ -44,6 +45,7 @@ const store = configureStore({
 const App = () =>(
   <Provider store={store.store}>
     <PersistGate loading={null} persistor={store.persistor}>
+    <StatusBar hidden={true} />
       <NavigatorIOS
         initialRoute={{
           component: Menu,
