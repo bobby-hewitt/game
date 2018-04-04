@@ -7,6 +7,14 @@ export const increaseScore = (payload) => {
   }
 }
 
+export const resetArrays = () => {
+  return dispatch => {
+    dispatch({
+      type: 'RESET_ARRAYS',
+    })
+  }
+}
+
 export const isIncorrect = (payload) => {
   return dispatch => {
     dispatch({

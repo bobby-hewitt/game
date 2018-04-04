@@ -60,7 +60,7 @@ export default (state = initialState, action) => {
         ...state,
         points: newPoints
       }
-       case 'RESET_POINTS':
+    case 'RESET_POINTS':
       return {
         ...state,
         points: [],
@@ -70,6 +70,12 @@ export default (state = initialState, action) => {
         streak: false,
         difficulty:false,
 
+      }
+    case 'RESET_ARRAYS':
+      return {
+        ...state,
+        newLives: [],
+        points:[]
       }
     case 'REMOVE_POINTS':
       return {

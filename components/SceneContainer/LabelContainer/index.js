@@ -27,12 +27,7 @@ class LabelContainer extends Component {
 
   constructor(props){
     super(props)
-    
     this.page = 'letters'
-  }
-
-  componentWillMount(){
-    // this.createWord(this.props)
   }
 
   componentWillReceiveProps(np){
@@ -50,9 +45,8 @@ class LabelContainer extends Component {
 
   componentDidMount(){
     this.focus()
-
+    console.log('lable',this.props.label)
     if (this.props.label){
-      console.log('working here')
       this.createWord(this.props)
     }
   }
@@ -66,7 +60,6 @@ class LabelContainer extends Component {
         found: false
       })
     }
-
     this.props.setLetters(letters)
     this.props.setWord(np.label.description)
   }
@@ -79,13 +72,10 @@ class LabelContainer extends Component {
   }
 
   onKeyPress(text){
-
-    
     if (this.props.showLetters && this.props.showImage){
       var key = text[text.length-1]
       if (key){
       this.props.setLastLetter(key.toLowerCase())
-
       var letters = Object.assign([], this.props.letters)
       var hasFound = false
       var count = 0
@@ -105,11 +95,9 @@ class LabelContainer extends Component {
         }
       }
       this.props.setLetters(letters)
-      
       if (!hasFound){
         if (this.props.lives === 1){
             this.gameOver()
-          //game over
         }
         this.props.loseLife()
         this.props.setStreak(false)
@@ -121,28 +109,27 @@ class LabelContainer extends Component {
       }
     } 
   }
-  }
+}
 
-  nextLabel(){
-    if (this.props.gameType === 'mashUp'){
-        this.props.setDifficulty(false)
-        if (this.props.imageIndex < this.props.images.length -1){
-         this.transitionImage()
-        } else {
-          this.props.navigator.push({
-            component: Menu,
-            navigationBarHidden: true,
-          })
-          return
-        }
-      return
-    } else if (this.props.labelIndex === this.props.image.labels.length -1){
-      
-    } else {
-      this.transition()
-        // handle image complete
-    }
+nextLabel(){
+  if (this.props.gameType === 'mashUp'){
+      this.props.setDifficulty(false)
+      if (this.props.imageIndex < this.props.images.length -1){
+       this.transitionImage()
+      } else {
+        this.props.navigator.push({
+          component: Menu,
+          navigationBarHidden: true,
+        })
+        return
+      }
+    return
+  } else if (this.props.labelIndex === this.props.image.labels.length -1){
+    
+  } else {
+    this.transition()
   }
+}
 
   addLife(){
     if (this.props.lives < 20){

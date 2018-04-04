@@ -7,7 +7,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import React, { Component } from 'react';
 import { nextImage, prevImage, nextLabel, prevLabel, setImageIndex, setSoloImageIndex, setLabelIndex } from '../../actions/image'
-import { increaseScore, setGameType } from '../../actions/score'
+import { increaseScore, setGameType, resetArrays } from '../../actions/score'
 import { updateImages } from '../../actions/http'
 import ImageThumb from '../../components/ImageThumb'
 import MashUp from '../../components/MashUp'
@@ -49,6 +49,7 @@ class Menu extends Component<Props> {
 
 componentWillMount(){
   var self = this;
+  this.props.resetArrays()
   let now = (new Date).getTime()
   let comparator = parseInt(self.props.updateId) + (1000 * 60 * 60 * 12)
   console.log(self.props.updateId)
@@ -116,7 +117,6 @@ componentWillMount(){
 
   renderImageRows(images){
     var imgArr = []
-
     for (var i =0; i < images.length; i = i+3){
       imgArr.push([
         {
@@ -130,43 +130,37 @@ componentWillMount(){
         {
           image: images[i+2],
           index: i+2
-        }])  
-      
+        }
+      ])    
     }
-
-
     return(
       <View style={styles.container}>
-      { /*<Header 
-      image={images[images.length-1]}
-      score={this.props.score}/>*/}
-      {!this.state.isLoading && !this.state.hasCompleted &&
-        
-      <MashUp 
-        copy1="Lets"
-        copy2="go"
-        onMashUp={this.onMashUp.bind(this)}
-        navigator={this.props.navigator}
-        image1={images[images.length-2].thumb}
-        image2={images[images.length-3].thumb}
-        image3={images[images.length-4].thumb}
-        image4={images[images.length-5].thumb}
-        image5={images[images.length-6].thumb}
-        image6={images[images.length-7].thumb}
-        image7={images[images.length-8].thumb}
-        image8={images[images.length-9].thumb}
-        image9={images[images.length-10].thumb}
-          />
 
-      }
-      {!this.state.isLoading && this.state.hasCompleted &&
-        <Completed 
-          updateId={this.props.updateId}/ >
-      }
-      {this.state.isLoading &&
-        <Loading 
+        {!this.state.isLoading && !this.state.hasCompleted &&  
+        <MashUp 
+          copy1="Lets"
+          copy2="go"
+          onMashUp={this.onMashUp.bind(this)}
+          navigator={this.props.navigator}
+          image1={images[images.length-2].thumb}
+          image2={images[images.length-3].thumb}
+          image3={images[images.length-4].thumb}
+          image4={images[images.length-5].thumb}
+          image5={images[images.length-6].thumb}
+          image6={images[images.length-7].thumb}
+          image7={images[images.length-8].thumb}
+          image8={images[images.length-9].thumb}
+          image9={images[images.length-10].thumb}
+        />
+        }
+        {!this.state.isLoading && this.state.hasCompleted &&
+          <Completed 
+            updateId={this.props.updateId}/ >
+        }
+        {this.state.isLoading &&
+          <Loading 
           isLoadingTransition={this.state.isLoadingTransition}/>
-      }
+        }
       </View>
     )
 
@@ -195,6 +189,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
 	nextImage, 
+  resetArrays,
 	prevImage,
   setImageIndex, 
   setLabelIndex, 
